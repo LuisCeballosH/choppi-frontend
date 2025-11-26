@@ -3,7 +3,7 @@
 import * as React from "react";
 import {
   IconCamera,
-  IconChartBar,
+  IconShoppingCart,
   IconDashboard,
   IconDatabase,
   IconFileAi,
@@ -11,10 +11,10 @@ import {
   IconFileWord,
   IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
+  IconBuildingStore,
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -29,13 +29,9 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { User } from "@/interfaces/user";
 
 const data = {
-  user: {
-    name: "Luis Ceballos",
-    email: "luis@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -45,12 +41,12 @@ const data = {
     {
       title: "Stores",
       url: "/dashboard/stores",
-      icon: IconListDetails,
+      icon: IconBuildingStore,
     },
     {
       title: "Products",
       url: "/dashboard/products",
-      icon: IconChartBar,
+      icon: IconShoppingCart,
     },
   ],
   navClouds: [
@@ -137,7 +133,14 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface Props {
+  user: User | null;
+}
+
+export function AppSidebar({
+  user,
+  ...props
+}: Props & React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -159,7 +162,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );

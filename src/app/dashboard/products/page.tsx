@@ -1,9 +1,9 @@
+import PageHeader from "@/components/PageHeader";
 import PaginationComponent from "@/components/Pagination";
 import ProductFilters from "@/components/products/ProductFilters";
 import ProductTable from "@/components/products/ProductTable";
 import Showing from "@/components/Showing";
 import { getProducts } from "@/services/product.service";
-import { getStores } from "@/services/store.service";
 import Link from "next/link";
 
 export default async function Products({
@@ -19,9 +19,17 @@ export default async function Products({
   );
   return (
     <>
-      <div className="mb-4 flex justify-between items-center">
+      <PageHeader
+        title="Products"
+        breadcrumbItems={[
+          { label: "Dashboard", link: "/dashboard" },
+          { label: "Products" },
+        ]}
+        link="/dashboard/products/create"
+        label="Add New Product"
+      />
+      <div className="mb-4">
         <ProductFilters />
-        <Link href="/dashboard/products/create">Create Product</Link>
       </div>
       <div className="mb-4">
         <ProductTable products={products.products} />

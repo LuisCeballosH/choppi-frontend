@@ -45,7 +45,12 @@ const ProductTable = ({ products }: Props) => {
             <TableCell>{product.description}</TableCell>
             <TableCell className="text-right">
               <div className="flex items-center justify-end gap-2">
-                <Link href={`/dashboard/products/${product.id}`}>Edit</Link>
+                <Link
+                  className="py-2 px-4 bg-[#171717] rounded-lg text-white font-semibold text-sm"
+                  href={`/dashboard/products/${product.id}`}
+                >
+                  Edit
+                </Link>
                 <Button onClick={() => handleDelete(product.id)}>Delete</Button>
               </div>
             </TableCell>

@@ -16,7 +16,6 @@ export async function createStore(
       },
       body: JSON.stringify(data),
     });
-    console.log(response)
     if (response.ok) {
       return {
         success: true,

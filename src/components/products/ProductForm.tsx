@@ -8,24 +8,34 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Product } from "@/interfaces/product";
 import { createProduct, updateProduct } from "@/actions/product.action";
+import { MultiSelect } from "../multi-select";
+import { Store } from "@/interfaces/store";
+import { useEffect, useState } from "react";
 
 const schema = z.object({
-  name: z.string().min(1, "El nombre es obligatorio").trim(),
+  name: z.string().min(1, "The name is required").trim(),
   description: z.string().trim().optional(),
+  storeIds: z.array(z.string()).min(1, "At least one store must be selected"),
 });
 
 export type ProductFormInputs = z.infer<typeof schema>;
 
 interface Props {
   product?: Product | null;
+  stores: Store[];
 }
 
-const ProductForm = ({ product }: Props) => {
+const ProductForm = ({ product, stores }: Props) => {
   const router = useRouter();
+  const [selectedStores, setSelectedStores] = useState<string[]>(
+    product?.stores?.map((store) => store.id) || []
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<ProductFormInputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -33,6 +43,11 @@ const ProductForm = ({ product }: Props) => {
       description: product?.description,
     },
   });
+
+  useEffect(() => {
+    setValue("storeIds", selectedStores);
+  }, [selectedStores, setValue]);
+
   const onSubmit: SubmitHandler<ProductFormInputs> = async (data) => {
     let response;
 
@@ -51,12 +66,12 @@ const ProductForm = ({ product }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid grid-cols-1 @2xl/content:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 @2xl/main:grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="form-label">Nombre</label>
+          <label className="form-label">Name</label>
           <Input
             type="text"
-            placeholder="Ingrese el nombre"
+            placeholder="Enter the name"
             {...register("name")}
           />
           {errors.name && (
@@ -66,9 +81,25 @@ const ProductForm = ({ product }: Props) => {
           )}
         </div>
         <div>
-          <label className="form-label">Descripción</label>
+          <label className="form-label">Stores</label>
+          <MultiSelect
+            options={stores}
+            value={selectedStores}
+            onChange={setSelectedStores}
+            placeholder="Select stores"
+            optionLabel="name"
+            optionValue="id"
+          />
+          {errors.storeIds && (
+            <span className="text-[#e02424] text-sm">
+              {errors.storeIds.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="form-label">Description</label>
           <Textarea
-            placeholder="Ingrese la descripción"
+            placeholder="Enter the description"
             {...register("description")}
           ></Textarea>
           {errors.description && (
@@ -79,7 +110,7 @@ const ProductForm = ({ product }: Props) => {
         </div>
       </div>
       <div className="grid grid-cols-1 @2xl/main:grid-cols-2 gap-4 mb-4">
-        <Button type="submit">Guardar</Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );

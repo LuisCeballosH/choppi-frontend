@@ -21,7 +21,7 @@ const ProductFilters = () => {
     } else {
       params.delete("searchText");
     }
-    router.push(`/dashboard/categories?${params.toString()}`);
+    router.push(`/dashboard/products?${params.toString()}`);
   }, 400);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {

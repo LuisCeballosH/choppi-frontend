@@ -1,6 +1,7 @@
+import PageHeader from "@/components/PageHeader";
 import ProductForm from "@/components/products/ProductForm";
-import StoreForm from "@/components/stores/StoreForm";
 import { getProduct } from "@/services/product.service";
+import { getStores } from "@/services/store.service";
 
 export default async function EditProduct({
   params,
@@ -9,5 +10,18 @@ export default async function EditProduct({
 }>) {
   const { id } = await params;
   const product = await getProduct(id);
-  return <ProductForm product={product} />;
+  const stores = await getStores();
+  return (
+    <>
+      <PageHeader
+        title="Edit Product"
+        breadcrumbItems={[
+          { label: "Dashboard", link: "/dashboard" },
+          { label: "Products", link: "/dashboard/products" },
+          { label: "Edit Product" },
+        ]}
+      />
+      <ProductForm product={product} stores={stores.stores} />
+    </>
+  );
 }

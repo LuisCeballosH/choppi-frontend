@@ -18,15 +18,12 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { logout } from "@/actions/auth.action";
+import { User } from "@/interfaces/user";
 
 export function NavUser({
   user,
 }: Readonly<{
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
+  user: User | null;
 }>) {
   const { isMobile } = useSidebar();
 
@@ -44,9 +41,9 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">LC</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium">{user?.username}</span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {user.email}
+                  {user?.email}
                 </span>
               </div>
               <IconDotsVertical className="ml-auto size-4" />
@@ -65,9 +62,9 @@ export function NavUser({
                   <AvatarFallback className="rounded-lg">LC</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-medium">{user?.username}</span>
                   <span className="text-muted-foreground truncate text-xs">
-                    {user.email}
+                    {user?.email}
                   </span>
                 </div>
               </div>

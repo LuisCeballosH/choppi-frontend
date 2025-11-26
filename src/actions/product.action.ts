@@ -14,9 +14,8 @@ export async function createProduct(
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ ...data, stores: [] }),
+      body: JSON.stringify(data),
     });
-    console.log(response);
     if (response.ok) {
       return {
         success: true,

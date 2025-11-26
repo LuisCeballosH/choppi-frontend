@@ -1,3 +1,4 @@
+import PageHeader from "@/components/PageHeader";
 import PaginationComponent from "@/components/Pagination";
 import Showing from "@/components/Showing";
 import StoreFilters from "@/components/stores/StoreFilters";
@@ -18,9 +19,17 @@ export default async function Stores({
   );
   return (
     <>
-      <div className="mb-4 flex justify-between items-center">
+      <PageHeader
+        title="Stores"
+        breadcrumbItems={[
+          { label: "Dashboard", link: "/dashboard" },
+          { label: "Stores" },
+        ]}
+        link="/dashboard/stores/create"
+        label="Add New Store"
+      />
+      <div className="mb-4">
         <StoreFilters />
-        <Link href="/dashboard/stores/create">Create Store</Link>
       </div>
       <div className="mb-4">
         <StoreTable stores={stores.stores} />

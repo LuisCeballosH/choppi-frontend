@@ -3,7 +3,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -50,7 +49,7 @@ const PaginationComponent = ({ total, path }: Props) => {
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={() => handlePageChange(page - 1)} />
+          <PaginationPrevious onClick={() => handlePageChange(page - 1)} className="cursor-pointer" />
         </PaginationItem>
         {getPageNumbers().map((num) => (
           <PaginationItem key={num}>
@@ -60,7 +59,7 @@ const PaginationComponent = ({ total, path }: Props) => {
           </PaginationItem>
         ))}
         <PaginationItem>
-          <PaginationNext onClick={() => handlePageChange(page + 1)} />
+          <PaginationNext onClick={() => handlePageChange(page + 1)} className="cursor-pointer" />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

@@ -1,7 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 import { Store } from "@/interfaces/store";
@@ -11,7 +10,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
 const schema = z.object({
-  name: z.string().min(1, "El nombre es obligatorio").trim(),
+  name: z.string().min(1, "The name is required").trim(),
   description: z.string().trim().optional(),
 });
 
@@ -52,12 +51,12 @@ const StoreForm = ({ store }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid grid-cols-1 @2xl/content:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 @2xl/main:grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="form-label">Nombre</label>
+          <label className="form-label">Name</label>
           <Input
             type="text"
-            placeholder="Ingrese el nombre"
+            placeholder="Enter the name"
             {...register("name")}
           />
           {errors.name && (
@@ -67,9 +66,9 @@ const StoreForm = ({ store }: Props) => {
           )}
         </div>
         <div>
-          <label className="form-label">Descripción</label>
+          <label className="form-label">Description</label>
           <Textarea
-            placeholder="Ingrese la descripción"
+            placeholder="Enter the description"
             {...register("description")}
           ></Textarea>
           {errors.description && (
@@ -80,7 +79,7 @@ const StoreForm = ({ store }: Props) => {
         </div>
       </div>
       <div className="grid grid-cols-1 @2xl/main:grid-cols-2 gap-4 mb-4">
-        <Button type="submit">Guardar</Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );
