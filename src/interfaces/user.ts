@@ -6,3 +6,7 @@ export interface User {
   updatedAt: Date;
   username: string;
 }
+export interface UserResponse {
+  total: number;
+  users: User[];
+}

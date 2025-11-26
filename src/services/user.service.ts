@@ -1,48 +1,52 @@
-import { Product, ProductResponse } from "@/interfaces/product";
+import { User, UserResponse } from "@/interfaces/user";
+import { verifySession } from "@/lib/dal";
 import { notFound } from "next/navigation";
 
-export async function getProducts(
+export async function getUsers(
   page?: number,
   size?: number,
   searchText?: string,
-  storeId?: string,
   sortBy?: string,
   sortOrder?: "asc" | "desc"
-): Promise<ProductResponse> {
+): Promise<UserResponse> {
+  const { token } = await verifySession();
+
   const params = new URLSearchParams();
   if (page) params.set("page", String(page));
   if (size) params.set("size", String(size));
   if (searchText) params.set("searchText", searchText);
-  if (storeId) params.set("storeId", storeId);
   if (sortBy) params.set("sortBy", sortBy);
   if (sortOrder) params.set("order", sortOrder);
   try {
     const data = await fetch(
-      `${process.env.API_URL}/api/products?${params.toString()}`,
+      `${process.env.API_URL}/api/users?${params.toString()}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
     if (data.ok) {
-      const response: ProductResponse = await data.json();
+      const response: UserResponse = await data.json();
       return response;
     }
-    return { total: 0, products: [] };
+    return { total: 0, users: [] };
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return { total: 0, products: [] };
+    console.error("Error fetching users:", error);
+    return { total: 0, users: [] };
   }
 }
 
-export async function getProduct(id: string): Promise<Product | null> {
+export async function getUser(id: string): Promise<User | null> {
+  const { token } = await verifySession();
   try {
-    const data = await fetch(`${process.env.API_URL}/api/products/${id}`, {
+    const data = await fetch(`${process.env.API_URL}/api/users/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
     if (data.ok) {

@@ -9,8 +9,6 @@ export async function getStores(
   sortBy?: string,
   sortOrder?: "asc" | "desc"
 ): Promise<StoreResponse> {
-  const { token } = await verifySession();
-
   const params = new URLSearchParams();
   if (page) params.set("page", String(page));
   if (size) params.set("size", String(size));
@@ -24,7 +22,6 @@ export async function getStores(
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -40,13 +37,11 @@ export async function getStores(
 }
 
 export async function getStore(id: string): Promise<Store | null> {
-  const { token } = await verifySession();
   try {
     const data = await fetch(`${process.env.API_URL}/api/stores/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     });
     if (data.ok) {

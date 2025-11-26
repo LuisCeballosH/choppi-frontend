@@ -50,7 +50,7 @@ const StoreForm = ({ store }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="grid grid-cols-1 @2xl/main:grid-cols-2 gap-4 mb-4">
         <div>
           <label className="form-label">Name</label>
