@@ -11,5 +11,6 @@ export interface Product {
   stores?: Store[];
   id: string;
   name: string;
+  stock: number;
   updatedAt: Date;
 }

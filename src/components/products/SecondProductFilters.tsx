@@ -3,6 +3,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import {
   Select,
   SelectContent,
@@ -14,13 +15,12 @@ import {
 } from "../ui/select";
 import { Store } from "@/interfaces/store";
 import { buildFilterParams } from "@/utils/build-filter-params";
-import { Button } from "../ui/button";
 
 interface Props {
   stores: Store[];
 }
 
-const ProductFilters = ({ stores }: Props) => {
+const SecondProductFilters = ({ stores }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [inputValue, setInputValue] = useState(
@@ -39,7 +39,7 @@ const ProductFilters = ({ stores }: Props) => {
     } else {
       params.delete("searchText");
     }
-    router.push(`/dashboard/products?${params.toString()}`);
+    router.push(`/products?${params.toString()}`);
   }, 400);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,7 @@ const ProductFilters = ({ stores }: Props) => {
       { searchText: inputValue, storeId: newCategoryId },
       size
     );
-    router.push(`/dashboard/products?${params.toString()}`);
+    router.push(`/products?${params.toString()}`);
   };
 
   const handleClear = () => {
@@ -67,11 +67,11 @@ const ProductFilters = ({ stores }: Props) => {
     params.set("size", String(size));
     params.delete("searchText");
     params.delete("storeId");
-    router.push(`/dashboard/products?${params.toString()}`);
+    router.push(`/products?${params.toString()}`);
   };
 
   return (
-    <div className="grid grid-cols-1 @3xl/main:grid-cols-2 @4xl/main:grid-cols-3 @6xl/main:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
       <Input
         type="text"
         placeholder="Buscar"
@@ -109,4 +109,4 @@ const ProductFilters = ({ stores }: Props) => {
   );
 };
 
-export default ProductFilters;
+export default SecondProductFilters;

@@ -1,6 +1,5 @@
 "use client";
 
-import { Store } from "@/interfaces/store";
 import {
   Table,
   TableBody,
@@ -10,25 +9,13 @@ import {
   TableRow,
 } from "../ui/table";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { Product } from "@/interfaces/product";
-import { deleteProduct } from "@/actions/product.action";
 
 interface Props {
   products: Product[];
 }
 
-const ProductTable = ({ products }: Props) => {
-  const router = useRouter();
-  const handleDelete = async (id: string) => {
-    const response = await deleteProduct(id);
-    if (response.success) {
-      router.refresh();
-    } else {
-      alert(response.message);
-    }
-  };
+const SecondProductTable = ({ products }: Props) => {
   return (
     <Table>
       <TableHeader>
@@ -49,11 +36,10 @@ const ProductTable = ({ products }: Props) => {
               <div className="flex items-center justify-end gap-2">
                 <Link
                   className="py-2 px-4 bg-[#171717] rounded-lg text-white font-semibold text-sm"
-                  href={`/dashboard/products/${product.id}`}
+                  href={`/products/${product.id}`}
                 >
-                  Edit
+                  View
                 </Link>
-                <Button onClick={() => handleDelete(product.id)}>Delete</Button>
               </div>
             </TableCell>
           </TableRow>
@@ -63,4 +49,4 @@ const ProductTable = ({ products }: Props) => {
   );
 };
 
-export default ProductTable;
+export default SecondProductTable;

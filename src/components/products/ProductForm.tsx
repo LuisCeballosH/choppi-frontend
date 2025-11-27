@@ -16,6 +16,7 @@ const schema = z.object({
   name: z.string().min(1, "The name is required").trim(),
   description: z.string().trim().optional(),
   storeIds: z.array(z.string()).min(1, "At least one store must be selected"),
+  stock: z.number().min(0, "Stock must be at least 0").optional(),
 });
 
 export type ProductFormInputs = z.infer<typeof schema>;
@@ -41,6 +42,7 @@ const ProductForm = ({ product, stores }: Props) => {
     defaultValues: {
       name: product?.name,
       description: product?.description,
+      stock: product?.stock || 0,
     },
   });
 
@@ -77,6 +79,20 @@ const ProductForm = ({ product, stores }: Props) => {
           {errors.name && (
             <span className="text-[#e02424] text-sm">
               {errors.name.message}
+            </span>
+          )}
+        </div>
+
+        <div>
+          <label className="form-label">Stock</label>
+          <Input
+            type="number"
+            placeholder="Ingrese el stock"
+            {...register("stock", { valueAsNumber: true })}
+          />
+          {errors.stock && (
+            <span className="text-[#e02424] text-sm">
+              {errors.stock.message}
             </span>
           )}
         </div>

@@ -1,12 +1,11 @@
-import PageHeader from "@/components/PageHeader";
 import PaginationComponent from "@/components/Pagination";
-import ProductFilters from "@/components/products/ProductFilters";
-import ProductTable from "@/components/products/ProductTable";
+import SecondProductFilters from "@/components/products/SecondProductFilters";
+import SecondProductTable from "@/components/products/SecondProductTable";
 import Showing from "@/components/Showing";
 import { getProducts } from "@/services/product.service";
 import { getStores } from "@/services/store.service";
 
-export default async function Products({
+export default async function ProductPage({
   searchParams,
 }: Readonly<{
   searchParams: Promise<{
@@ -25,28 +24,16 @@ export default async function Products({
   );
   const stores = await getStores();
   return (
-    <>
-      <PageHeader
-        title="Products"
-        breadcrumbItems={[
-          { label: "Dashboard", link: "/dashboard" },
-          { label: "Products" },
-        ]}
-        link="/dashboard/products/create"
-        label="Add New Product"
-      />
+    <div className="p-4">
       <div className="mb-4">
-        <ProductFilters stores={stores.stores} />
+        <SecondProductFilters stores={stores.stores} />
       </div>
       <div className="mb-4">
-        <ProductTable products={products.products} />
+        <SecondProductTable products={products.products} />
       </div>{" "}
       {(Number(size) || 10) < products.total && (
         <div className="flex flex-col justify-between items-center gap-5">
-          <PaginationComponent
-            total={products.total}
-            path="/dashboard/products"
-          />
+          <PaginationComponent total={products.total} path="/products" />
           <Showing
             total={products.total}
             size={Number(size) || 10}
@@ -54,6 +41,6 @@ export default async function Products({
           />
         </div>
       )}
-    </>
+    </div>
   );
 }
